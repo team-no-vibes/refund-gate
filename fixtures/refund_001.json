@@ -1,0 +1,22 @@
+{ "_synthetic": "SYNTHETIC. The message and the order are invented test data; no real customer or purchase exists. The policy block is a real capture, see GROUND_TRUTH.md.",
+  "message": {
+    "customer_id": "C-4471",
+    "order_id": "ORD-20913",
+    "amount_cents": 12999,
+    "reason": "bought the wrong tier, credits unused",
+    "msg_ts": "1789300500.000100"
+  },
+  "order": {
+    "order_id": "ORD-20913",
+    "amount_cents": 12999,
+    "hours_since_purchase": 11,
+    "status": "unused"
+  },
+  "policy": {
+    "window_hours": 24,
+    "escalate_over_cents": 25000,
+    "escalate_over_cents_source": "operator default. The page states no escalation threshold and offers self-service refunds for any amount inside the window, see GROUND_TRUTH.md. This number is a decision by whoever runs the gate, not a fact from OpenRouter.",
+    "text": "Credits must be unused. Refund requests must be made within 24 hours of purchase. Self-service refunds are available for any amount within the 24-hour window using the refund button.",
+    "source_url": "https://openrouter.zendesk.com/hc/en-us/articles/40858600529307-Refunds-and-Payment-Information"
+  }
+}
