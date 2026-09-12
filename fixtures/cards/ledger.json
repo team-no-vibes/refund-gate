@@ -1,0 +1,67 @@
+{
+  "text": "Refund Gate ledger",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Ledger*  ·  every action, chained, nothing editable"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "`RCP-0412`  *ASK*  ·  Acme Studios — 1,200 credits  ·  posted to #refundchat  ·  waiting on @dana @joe  ·  Sep 12, 2:14 PM ET"
+        }
+      ]
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "`RCP-0411`  *APPROVED*  ·  Northwind Labs — 800 credits  ·  Dana Reyes  ·  rule saved  ·  linked to `RCP-0396`  ·  Sep 12, 2:16 PM ET"
+        }
+      ]
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "`RCP-0410`  *DENIED*  ·  Vantage Group — 25,000 credits  ·  Joe Teblum  ·  rule saved  ·  Sep 12, 2:19 PM ET"
+        }
+      ]
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "`RCP-0413`  *AUTO-APPROVED*  ·  Orbital Co — 1,200 credits  ·  cited Dana Reyes, Sep 12  ·  Sep 12, 2:41 PM ET"
+        }
+      ]
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "`RCP-0414`  *AUTO-DENIED*  ·  Kestrel Media — 40,000 credits  ·  cited Marketing, Aug 29  ·  Sep 12, 2:44 PM ET"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "New rule saved. Signed by Dana Reyes. *6 similar requests* in the last 30 days would now be handled automatically."
+      }
+    }
+  ]
+}

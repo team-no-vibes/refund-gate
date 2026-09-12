@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "color": "#2EB67D",
+      "fallback": "APPROVED · Northwind Labs — 800 credits",
+      "blocks": [
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "*APPROVED*  ·  *Northwind Labs* — 800 credits"
+          }
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "Dana Reyes, Sep 12, 2:16 PM ET  ·  rule saved, 6 future requests covered  ·  `RCP-0411` linked to `RCP-0396`"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
