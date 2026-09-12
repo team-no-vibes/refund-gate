@@ -1,0 +1,19 @@
+{
+  "attachments": [
+    {
+      "color": "#5C6685",
+      "fallback": "Auto-denied · Kestrel Media",
+      "blocks": [
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "*Auto-denied*  ·  Kestrel Media — 40,000 credits  ·  cited Marketing, Aug 29  ·  `RCP-0414`"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

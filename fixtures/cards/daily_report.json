@@ -1,0 +1,174 @@
+{
+  "text": "Refund Gate daily report, Fri Sep 12",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "Daily report · Friday, Sep 12"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Overnight run finished at 8:58 AM. *243* requests are waiting on a human in #refundchat."
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Screened*\n1,284"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Auto-resolved*\n1,041 (81%)"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Needs a human*\n243 (19%)"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Credits returned*\n412,000 ($4,120)"
+        }
+      ]
+    },
+    {
+      "type": "data_visualization",
+      "title": "Asks by reason",
+      "chart": {
+        "type": "bar",
+        "series": [
+          {
+            "name": "Asks",
+            "data": [
+              {
+                "label": "Failed export",
+                "value": 84
+              },
+              {
+                "label": "Duplicate",
+                "value": 56
+              },
+              {
+                "label": "Usage disputed",
+                "value": 41
+              },
+              {
+                "label": "Outside window",
+                "value": 37
+              },
+              {
+                "label": "Manual flag",
+                "value": 25
+              }
+            ]
+          }
+        ],
+        "axis_config": {
+          "categories": [
+            "Failed export",
+            "Duplicate",
+            "Usage disputed",
+            "Outside window",
+            "Manual flag"
+          ],
+          "x_label": "Reason",
+          "y_label": "Asks"
+        }
+      }
+    },
+    {
+      "type": "data_visualization",
+      "title": "Auto-resolved vs asked",
+      "chart": {
+        "type": "line",
+        "series": [
+          {
+            "name": "Auto-resolved",
+            "data": [
+              {
+                "label": "Aug 15",
+                "value": 812
+              },
+              {
+                "label": "Aug 22",
+                "value": 874
+              },
+              {
+                "label": "Aug 29",
+                "value": 903
+              },
+              {
+                "label": "Sep 5",
+                "value": 968
+              },
+              {
+                "label": "Sep 12",
+                "value": 1041
+              }
+            ]
+          },
+          {
+            "name": "Asked a human",
+            "data": [
+              {
+                "label": "Aug 15",
+                "value": 186
+              },
+              {
+                "label": "Aug 22",
+                "value": 205
+              },
+              {
+                "label": "Aug 29",
+                "value": 198
+              },
+              {
+                "label": "Sep 5",
+                "value": 231
+              },
+              {
+                "label": "Sep 12",
+                "value": 243
+              }
+            ]
+          }
+        ],
+        "axis_config": {
+          "categories": [
+            "Aug 15",
+            "Aug 22",
+            "Aug 29",
+            "Sep 5",
+            "Sep 12"
+          ],
+          "x_label": "Week ending",
+          "y_label": "Requests"
+        }
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Oldest open asks*\n`RECEIPT   ACCOUNT         CREDITS  WAITING`\n`RCP-0412  Acme Studios    1,200    6h 40m`\n`RCP-0409  Kestrel Media   40,000   5h 12m`\n`RCP-0404  Orbital Co      9,600    4h 58m`\n`RCP-0398  Northwind Labs  800      3h 07m`\n`RCP-0391  Tallgrass AI    7,425    2h 44m`"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "Posted 9:00 AM ET  ·  no pings from this channel  ·  cards live in #refundchat"
+        }
+      ]
+    }
+  ]
+}
