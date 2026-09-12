@@ -1,0 +1,22 @@
+{ "_synthetic": "SYNTHETIC. The message and the order are invented test data; no real customer or order exists. The policy block is a real capture, see GROUND_TRUTH.md.",
+  "message": {
+    "customer_id": "C-4471",
+    "order_id": "ORD-20913",
+    "amount_cents": 12999,
+    "reason": "arrived damaged, box crushed",
+    "msg_ts": "1789300500.000100"
+  },
+  "order": {
+    "order_id": "ORD-20913",
+    "amount_cents": 12999,
+    "days_since_purchase": 11,
+    "status": "delivered"
+  },
+  "policy": {
+    "window_days": 30,
+    "escalate_over_cents": 25000,
+    "escalate_over_cents_source": "operator default. The page states no escalation threshold, see GROUND_TRUTH.md. This number is a decision by whoever runs the gate, not a fact from the retailer.",
+    "text": "We accept returns or exchanges within 30 days from the original purchase on unopened televisions, camcorder, digital cameras, radar detectors, GPS/navigation, computers, car stereos, cell phones, and major appliances.",
+    "source_url": "https://www.electronicexpress.com/return-policy"
+  }
+}
