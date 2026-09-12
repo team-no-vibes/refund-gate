@@ -1,2 +1,3 @@
 task_id,model,stage,status
-s0-harness,anthropic/opus-5,0,claimed
+s0-harness,anthropic/opus-5,0,merged
+s0-artifacts,anthropic/opus-5,0,claimed
