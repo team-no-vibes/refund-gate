@@ -1,0 +1,19 @@
+{
+  "attachments": [
+    {
+      "color": "#5C6685",
+      "fallback": "Auto-approved · Orbital Co",
+      "blocks": [
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "*Auto-approved*  ·  Orbital Co — 1,200 credits  ·  cited Dana Reyes, Sep 12  ·  `RCP-0413`"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
