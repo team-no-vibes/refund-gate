@@ -21,8 +21,19 @@ GREEN allowlist
 git ls-files | grep -qiE '^(STATUS|PROGRESS|REPORT|NOTES)\.md$' && RED "narrative_file" || true
 GREEN no_narrative
 
-git ls-files | grep -v '^ci/' | xargs -r grep -lnE '(sk-or-|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY)' 2>/dev/null && RED "secret_pattern" || true
+git ls-files | grep -v '^ci/' | xargs -r grep -lnE '(sk-or-|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|xox[abp]-[A-Za-z0-9-]{10,}|xapp-[A-Za-z0-9-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY)' 2>/dev/null && RED "secret_pattern" || true
 GREEN no_secrets
+
+if git ls-files --error-unmatch slack/manifest.json >/dev/null 2>&1; then
+  python - <<'EOF' || RED "slack_manifest"
+import json
+m=json.load(open("slack/manifest.json")); s=m["settings"]
+assert s["socket_mode_enabled"] is True and s["interactivity"]["is_enabled"] is True
+assert "chat:write" in m["oauth_config"]["scopes"]["bot"]
+assert "message.channels" in s["event_subscriptions"]["bot_events"]
+EOF
+fi
+GREEN slack_manifest
 
 src=$(git ls-files 'lib/*.py' 'bin/*' || true)
 [ -n "$src" ] && { echo "$src" | xargs grep -lnE '\b(TODO|FIXME|mock|placeholder)\b' 2>/dev/null && RED "placeholder" || true; }
@@ -61,6 +72,6 @@ if [ -s MANIFEST ]; then
 fi
 GREEN manifest
 
-[ -n "$tst" ] && python -m pytest -q tests >/dev/null 2>&1 || { [ -z "$tst" ] || RED "pytest"; }
+[ -n "$tst" ] && echo "$tst" | xargs python -m pytest -q >/dev/null 2>&1 || { [ -z "$tst" ] || RED "pytest"; }
 GREEN tests
 echo "GREEN all"
