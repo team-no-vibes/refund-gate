@@ -2,7 +2,7 @@
 bound: loc_cap=300
 
 ## stage 0 harness
-allow: ci/ STAGES.md MANIFEST CLAIMS.md GROUND_TRUTH.md .github/ .gitignore README.md pyproject.toml tests/
+allow: artifacts/ ci/ STAGES.md MANIFEST CLAIMS.md GROUND_TRUTH.md .github/ .gitignore README.md pyproject.toml tests/
 spec: ci/check.sh and ci/ratify.sh from the kickoff, plus one line after set -euo pipefail in both: command -v sha256sum >/dev/null 2>&1 || sha256sum() { shasum -a 256 "$@"; }. README line one is `bash ci/check.sh`. pyproject: python 3.12, pytest only. tests/test_smoke.py asserts True. CLAIMS.md format: task_id,model,stage,status.
 exit: bash ci/check.sh prints GREEN all here and CI green on the pushed branch
 
