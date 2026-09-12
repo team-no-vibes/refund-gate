@@ -11,17 +11,17 @@ Format:
 
 No entry may be written from memory, from documentation, or from another model's claim.
 
-## electronic express consumer electronics return window
+## openrouter credits refund window
 date: 2026-09-12
-method: WebSearch "consumer electronics retailer return policy 30 days refund official page", then WebFetch of https://www.electronicexpress.com/return-policy
-fact: 30 days. Verbatim: "We accept returns or exchanges within 30 days from the original purchase on unopened televisions, camcorder, digital cameras, radar detectors, GPS/navigation, computers, car stereos, cell phones, and major appliances."
+method: WebSearch "openrouter credits refund policy", then WebFetch of https://openrouter.zendesk.com/hc/en-us/articles/40858600529307-Refunds-and-Payment-Information
+fact: 24 hours. Verbatim: "Credits must be unused. Refund requests must be made within 24 hours of purchase. Self-service refunds are available for any amount within the 24-hour window using the refund button."
 
-## electronic express escalation threshold
+## openrouter escalation threshold
 date: 2026-09-12
 method: same fetch as above
-fact: none. The page states no dollar amount that triggers manager approval or escalation. It does state that cash refunds over $100 and all check purchases are issued by check from corporate within 14 business days, which is a disbursement rule, not an escalation rule. Any escalate_over_cents in a fixture is an operator default, not a fact from this page.
+fact: none. "any amount" is self-service inside the window. Any escalate_over_cents in a fixture is an operator default, not a fact from this page.
 
-## capture fidelity of the above
+## openrouter platform fee on refund
 date: 2026-09-12
-method: WebFetch returns a model-rendered reading of the page, not raw HTML
-fact: the 30-day sentence is verbatim; the surrounding policy prose in fixtures/policy.json is a rendering of the page, not a byte-exact copy. Exa was not available in this session.
+method: same fetch as above
+fact: "Platform fees are not refunded." Refund amount is credits purchased minus the platform fee. The fee percentage is not stated on this page; measure it separately before any fixture uses it.
