@@ -67,6 +67,8 @@ if [ -s MANIFEST ]; then
     [ "${sig#SIGNED_OFF_BY=}" != "$sig" ] || RED "manifest:line$n:signature"
     if [ -n "$prev" ]; then want=$(printf '%s' "$prev" | sha256sum | cut -d' ' -f1); [ "$chain" = "chain=$want" ] || RED "manifest:line$n:chain"; fi
     git cat-file -e "${tree}^{tree}" 2>/dev/null || RED "manifest:line$n:tree"
+    kf="artifacts/stage$st.ci.json"; git ls-files --error-unmatch "$kf" >/dev/null 2>&1 || RED "manifest:line$n:keyfile-missing:$kf"
+    [ "$(sha256sum "$kf" | cut -d' ' -f1)" = "$key" ] || RED "manifest:line$n:key"
     prev="$line"
   done < MANIFEST
 fi

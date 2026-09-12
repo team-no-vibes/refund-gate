@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="A refund request is checked against past human rulings, then against policy, and is refunded, denied, or held for a human tap. Every outcome writes a chained receipt.">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6B78A8"/></marker>
+    <linearGradient id="violet" gradientUnits="userSpaceOnUse" x1="736" y1="56" x2="932" y2="108"><stop stop-color="#8278FF"/><stop offset="1" stop-color="#5B46E8"/></linearGradient>
+  </defs>
+  <style>.n{font:600 18px Inter,ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif}.s{font:400 14px Inter,ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif}</style>
+  <rect width="1200" height="300" rx="20" fill="#101B35"/>
+  <g fill="#1A2547" stroke="#2C3A6B"><rect x="48" y="112" width="176" height="72" rx="14"/><rect x="280" y="112" width="176" height="72" rx="14"/><rect x="512" y="112" width="176" height="72" rx="14"/><rect x="988" y="112" width="164" height="72" rx="14"/></g>
+  <g text-anchor="middle"><text class="n" x="136" y="143" fill="#FFFFFF">Refund request</text><text class="s" x="136" y="165" fill="#9BA6C7">in Slack</text>
+    <text class="n" x="368" y="143" fill="#FFFFFF">Did a person</text><text class="s" x="368" y="165" fill="#9BA6C7">already decide this?</text>
+    <text class="n" x="600" y="143" fill="#FFFFFF">Policy check</text><text class="s" x="600" y="165" fill="#9BA6C7">window and amount</text>
+    <text class="n" x="1070" y="143" fill="#FFFFFF">Chained</text><text class="n" x="1070" y="167" fill="#FFFFFF">receipt</text></g>
+  <g stroke="#6B78A8" stroke-width="2" fill="none" marker-end="url(#ah)"><path d="M232 148 H272"/><path d="M464 148 H504"/><path d="M696 148 H728"/>
+    <path d="M932 82 C962 82 958 132 984 138"/><path d="M932 148 H984"/><path d="M932 214 C962 214 958 164 984 158"/></g>
+  <g stroke-width="1.5"><rect x="736" y="56" width="196" height="52" rx="26" fill="url(#violet)" stroke="#8278FF"/><rect x="736" y="122" width="196" height="52" rx="26" fill="#1A2547" stroke="#5C3A52"/><rect x="736" y="188" width="196" height="52" rx="26" fill="#1A2547" stroke="#5C4A2A"/></g>
+  <g class="n" text-anchor="middle"><text x="834" y="89" fill="#FFFFFF">Refund it</text><text x="834" y="155" fill="#FF8FA0">Deny it</text><text x="834" y="221" fill="#FFC46B">Ask a human</text></g>
+</svg>

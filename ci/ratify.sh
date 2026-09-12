@@ -8,7 +8,10 @@ die() { echo "ratify: $1"; exit 1; }
 st="${1:?usage: ratify.sh <stage>}"; who="${2:?usage: ratify.sh <stage> <your-name>}"
 bash ci/check.sh
 cur=-1; [ -s MANIFEST ] && cur=$(tail -n1 MANIFEST | cut -d, -f1)
-[ "$st" -gt "$cur" ] || die "stage $st already ratified"
+[ "$st" -eq $((cur+1)) ] || die "next stage is $((cur+1)), not $st"
+req=$(awk -v want="$st" '/^## stage /{s=$3+0} /^allow:/{if (s==want){sub(/^allow: */,"");print;exit}}' STAGES.md)
+[ -n "$req" ] || die "stage $st has no allow line in STAGES.md"
+for f in $req; do case "$f" in */) [ -d "$f" ] || die "stage $st incomplete: missing dir $f" ;; *) [ -e "$f" ] || die "stage $st incomplete: missing $f" ;; esac; done
 tree=$(git rev-parse "HEAD^{tree}"); sha=$(git rev-parse HEAD)
 mkdir -p artifacts
 gh api "repos/{owner}/{repo}/commits/$sha/check-runs" --jq '[.check_runs[] | {name, head_sha, conclusion, completed_at}]' > "artifacts/stage$st.ci.json"
