@@ -119,6 +119,11 @@ class SlackTransport:
 def main() -> int:
     bot, app_token = os.environ["SLACK_BOT_TOKEN"], os.environ["SLACK_APP_TOKEN"]
     channel = os.environ["REFUNDS_CHANNEL"]
+    # One workspace, one bot token. Bolt switches itself into OAuth mode the moment it
+    # sees SLACK_CLIENT_ID and SLACK_CLIENT_SECRET in the environment, and then ignores
+    # the token it was handed. The operator's .env carries both, so say no here.
+    for oauth_var in ("SLACK_CLIENT_ID", "SLACK_CLIENT_SECRET"):
+        os.environ.pop(oauth_var, None)
     app = App(token=bot)
     out = Adapter(SlackTransport(app.client, channel))
 
