@@ -1,0 +1,178 @@
+#!/usr/bin/env python
+"""Socket Mode app. A refund request in the channel becomes one card with real buttons.
+
+Network lives here and nowhere else. Every outbound call goes through lib.adapter,
+so AGENT_READ_ONLY=1 turns the whole app into a dry run that still logs what it meant to do.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from slack_bolt import App
+from slack_bolt.adapter.socket_mode import SocketModeHandler
+
+from lib.adapter import Adapter
+from lib.ingest import slack as ingest_slack
+from lib.types import RefundRequest, canonical
+
+ASK = "#5B46E8"
+SETTLED = {
+    "approve_once": ("#2EB67D", "APPROVED", "approved"),
+    "approve_and_set_rule": ("#2EB67D", "APPROVED", "approved, rule saved"),
+    "deny": ("#D64560", "DENIED", "denied"),
+}
+OTHER = {
+    "partial": "Partial refund",
+    "ask_customer": "Ask the customer",
+    "reassign": "Send to someone",
+    "snooze": "Snooze 4 hours",
+}
+
+
+DEMO = [
+    "Refund ORD-20913 for C-4471, $129.99 - bought the wrong tier, credits unused",
+    "Refund ORD-20914 for C-8802, $489.00 - changed my mind",
+    "Refund ORD-20915 for C-3310, $12.00 - three failed batch exports still burned credits",
+]
+
+
+def receipt(request: RefundRequest) -> str:
+    """The request's own name. Same request, same receipt, on any machine."""
+    return "RCP-" + hashlib.sha256(canonical(request).encode("utf-8")).hexdigest()[:8]
+
+
+def money(cents: int) -> str:
+    return f"${cents / 100:,.2f}"
+
+
+def ask_card(request: RefundRequest) -> list[dict]:
+    rid = receipt(request)
+    options = [
+        {"text": {"type": "plain_text", "text": label}, "value": value}
+        for value, label in OTHER.items()
+    ]
+    button = lambda action_id, text, style: {  # noqa: E731
+        "type": "button",
+        "action_id": action_id,
+        "text": {"type": "plain_text", "text": text},
+        "value": rid,
+        **({"style": style} if style else {}),
+    }
+    return [{
+        "color": ASK,
+        "fallback": f"ASK · {request.customer_id} — {money(request.amount_cents)}",
+        "blocks": [
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": f"*ASK*  ·  *{request.customer_id}* — {money(request.amount_cents)}"},
+                "accessory": {"type": "overflow", "action_id": "other_actions", "options": options},
+            },
+            {
+                "type": "context",
+                "elements": [{"type": "mrkdwn", "text": f"Order `{request.order_id}`  ·  {money(request.amount_cents)}  ·  message `{request.msg_ts}`"}],
+            },
+            {"type": "section", "text": {"type": "mrkdwn", "text": request.reason}},
+            {
+                "type": "actions",
+                "elements": [
+                    button("approve_once", "Approve refund (1 time)", "primary"),
+                    button("approve_and_set_rule", "Approve and set rule", None),
+                    button("deny", "Deny", "danger"),
+                ],
+            },
+            {"type": "context", "elements": [{"type": "mrkdwn", "text": f"`{rid}`  ·  no decision has been executed yet"}]},
+        ],
+    }]
+
+
+def settled_card(action_id: str, rid: str, who: str) -> list[dict]:
+    color, word, phrase = SETTLED[action_id]
+    return [{
+        "color": color,
+        "fallback": f"{word} · {rid}",
+        "blocks": [
+            {"type": "section", "text": {"type": "mrkdwn", "text": f"*{word}*  ·  {phrase} by <@{who}>"}},
+            {"type": "context", "elements": [{"type": "mrkdwn", "text": f"`{rid}`  ·  recorded, not yet executed — execution is the gate, stage 4"}]},
+        ],
+    }]
+
+
+class SlackTransport:
+    """The only thing in this repo that talks to Slack."""
+
+    def __init__(self, client, channel: str) -> None:
+        self.client = client
+        self.channel = channel
+
+    def read_events(self) -> list:
+        return self.client.conversations_history(channel=self.channel, limit=20)["messages"]
+
+    def post(self, payload: dict) -> dict:
+        return self.client.chat_postMessage(channel=self.channel, **payload).data
+
+
+def main() -> int:
+    bot, app_token = os.environ["SLACK_BOT_TOKEN"], os.environ["SLACK_APP_TOKEN"]
+    channel = os.environ["REFUNDS_CHANNEL"]
+    app = App(token=bot)
+    out = Adapter(SlackTransport(app.client, channel))
+
+    @app.event("message")
+    def on_message(event, logger):
+        if event.get("channel") != channel or event.get("bot_id") or event.get("subtype"):
+            return
+        try:
+            request = ingest_slack(event)
+        except ValueError as why:
+            logger.info("not a refund request: %s", why)
+            return
+        out.post({"attachments": ask_card(request), "text": f"Refund request {receipt(request)}"})
+
+    @app.event("app_mention")
+    def on_mention(event):
+        """The whole demo is driven from Slack: mention the bot, the cases arrive."""
+        if "demo" not in event.get("text", "").lower():
+            out.post({"text": "Say `@refund-gate demo` and I will post the demo requests here."})
+            return
+        for text in DEMO:
+            seeded = app.client.chat_postMessage(channel=channel, text=text)
+            request = ingest_slack({"text": text, "ts": seeded["ts"]})
+            out.post({"attachments": ask_card(request), "text": f"Refund request {receipt(request)}"})
+
+    @app.action("other_actions")
+    def on_other(ack, body, action):
+        ack()
+        rid = body["actions"][0].get("block_id", "")
+        app.client.chat_postMessage(
+            channel=body["channel"]["id"],
+            thread_ts=body["message"]["ts"],
+            text=f"{OTHER.get(action['selected_option']['value'], 'noted')} — requested by <@{body['user']['id']}>. {rid}",
+        )
+
+    def settle(action_id):
+        def handler(ack, body):
+            ack()
+            rid = body["actions"][0]["value"]
+            app.client.chat_update(
+                channel=body["channel"]["id"],
+                ts=body["message"]["ts"],
+                text=f"{rid} {action_id}",
+                attachments=settled_card(action_id, rid, body["user"]["id"]),
+            )
+        return handler
+
+    for action_id in SETTLED:
+        app.action(action_id)(settle(action_id))
+
+    print(f"refund-gate listening on {channel}", flush=True)
+    SocketModeHandler(app, app_token).start()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

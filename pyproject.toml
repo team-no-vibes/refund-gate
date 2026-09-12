@@ -5,6 +5,7 @@ requires-python = ">=3.12"
 
 [project.optional-dependencies]
 dev = ["pytest"]
+app = ["slack_bolt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
