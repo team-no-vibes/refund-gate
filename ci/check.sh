@@ -41,7 +41,7 @@ fi
 GREEN loc_cap
 
 if [ -n "$base" ]; then
-  for c in $(git rev-list "$base"..HEAD); do
+  for c in $(git rev-list --no-merges "$base"..HEAD); do
     git log -1 --format=%B "$c" | grep -q '^Model: ' || RED "trailer_model:$c"
     git log -1 --format=%B "$c" | grep -q '^Task: ' || RED "trailer_task:$c"
   done
