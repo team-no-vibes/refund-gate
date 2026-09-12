@@ -1,0 +1,26 @@
+{
+  "attachments": [
+    {
+      "color": "#D64560",
+      "fallback": "DENIED · Vantage Group — 25,000 credits",
+      "blocks": [
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "*DENIED*  ·  *Vantage Group* — 25,000 credits"
+          }
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "Joe Teblum, Sep 12, 2:19 PM ET  ·  rule saved, annual plans are not refunded mid-term  ·  `RCP-0410`"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
