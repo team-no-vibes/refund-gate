@@ -1,0 +1,110 @@
+{
+  "attachments": [
+    {
+      "color": "#5B46E8",
+      "fallback": "ASK · Acme Studios — 1,200 credits",
+      "blocks": [
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "*ASK*  ·  *Acme Studios* — 1,200 credits"
+          },
+          "accessory": {
+            "type": "overflow",
+            "action_id": "other_actions",
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Partial refund"
+                },
+                "value": "partial"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Ask the customer"
+                },
+                "value": "ask_customer"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Send to someone"
+                },
+                "value": "reassign"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Snooze 4 hours"
+                },
+                "value": "snooze"
+              }
+            ]
+          }
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "Received Sep 12, 2:14 PM ET  ·  $12.00  ·  Studio tier  ·  18 months  ·  2 prior requests"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "Wants 1,200 credits back after three failed batch exports this morning.\n\n*Evidence*  No prior decision covers a failed export that still consumed credits on a successful retry. Searched 14 threads and 3 meetings.  <https://app.refundgate.io/receipts/0412/search|View source>"
+          }
+        },
+        {
+          "type": "actions",
+          "elements": [
+            {
+              "type": "button",
+              "style": "primary",
+              "action_id": "approve_once",
+              "text": {
+                "type": "plain_text",
+                "text": "Approve refund (1 time)"
+              },
+              "value": "RCP-0412"
+            },
+            {
+              "type": "button",
+              "action_id": "approve_and_set_rule",
+              "text": {
+                "type": "plain_text",
+                "text": "Approve and set rule"
+              },
+              "value": "RCP-0412"
+            },
+            {
+              "type": "button",
+              "style": "danger",
+              "action_id": "deny",
+              "text": {
+                "type": "plain_text",
+                "text": "Deny"
+              },
+              "value": "RCP-0412"
+            }
+          ]
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "`RCP-0412` linked to `RCP-0411`  ·  waiting on @dana @joe  ·  30 seconds to undo"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
